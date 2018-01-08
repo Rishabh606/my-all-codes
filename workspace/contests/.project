@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>contests</name>
+	<comment></comment>
+	<projects>
+		<project>CD-A2</project>
+		<project>CD-class3</project>
+		<project>CD-class7-recur</project>
+		<project>CD-classs-2</project>
+		<project>CruxDecFT</project>
+		<project>CruxSumeet</project>
+		<project>practise2</project>
+		<project>stacks</project>
+		<project>test</project>
+		<project>tick-tack-toe</project>
+		<project>try_GUI</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>

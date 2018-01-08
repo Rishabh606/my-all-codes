@@ -1,0 +1,13 @@
+import java.util.ArrayList;
+
+public class arrLi {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> al;
+		al = new ArrayList<>();
+		String s1 = "abcd";
+		printchars(s1);
+	}
+
+}

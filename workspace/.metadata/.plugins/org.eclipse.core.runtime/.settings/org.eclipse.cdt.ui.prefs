@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+org.eclipse.cdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="false" context\="org.eclipse.cdt.core.cxxSource.contenttype_context" deleted\="false" description\="Main Function" enabled\="true" name\="C++with Main">/*&\#13;\r\n*&\#13;\r\n*created by\: ${user}&\#13;\r\n*${date}&\#13;\r\n*${time}&\#13;\r\n*/&\#13;\r\n\#include &lt;iostream&gt;&\#13;\r\n&\#13;\r\nusing namespace std;&\#13;\r\n&\#13;\r\nint main()&\#13;\r\n{&\#13;\r\n&\#13;\r\n&\#13;\r\n//Todo Place code here&\#13;\r\n&\#13;\r\n&\#13;\r\nreturn 0;&\#13;\r\n}&\#13;\r\n//Function Definition</template></templates>
+spelling_locale_initialized=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

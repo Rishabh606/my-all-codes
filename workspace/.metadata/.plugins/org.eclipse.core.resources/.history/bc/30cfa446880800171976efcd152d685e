@@ -1,0 +1,50 @@
+package contest;
+
+import java.util.Scanner;
+
+public class WeekOfCode30 {
+	public static Scanner scn = new Scanner(System.in);
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//candyfiller();
+		int n = scn.nextInt();
+		no_of_minfun(n);
+	}
+	public static int[] takeinput(int n) {
+		int[] rv = null;
+
+		rv = new int[n];
+
+		for (int i = 0; i < n; i++) {
+			rv[i] = scn.nextInt();
+		}
+		return rv;
+	}
+	public static void candyfiller(){
+		int n = scn.nextInt();
+		int t = scn.nextInt();
+		int[] arr = takeinput(t);
+		int temp = n;
+		int sum = 0;
+		for(int i = 1; i<t;i++){
+			temp = temp-arr[i-1];
+			if(temp<5){
+				if (temp<0){
+					temp=0;
+				}
+				sum = sum + n-temp;
+				temp = n;
+			}
+		}
+		System.out.println(sum);
+	}
+	public static void no_of_minfun(int n){
+		if(n==2){
+			System.out.print("min(int, int)");
+			return;
+		}
+		System.out.print("min(int,");
+		 no_of_minfun(n-1);
+		 System.out.println(")");
+	}
+}

@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+
+public class arrLi {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> al;
+		al = new ArrayList<>();
+		String s1 = "abcd";
+		String s2 = "nitin";
+		//printchars(s1);
+		subsprinter(s1);
+		palindrome(s2);
+		
+	}
+public static void printchars (String s1)
+{
+	for(int i =0; i<s1.length(); i++)
+	{
+		System.out.println(s1.charAt(i));
+	}
+}
+public static void subsprinter(String s1)
+{
+	for(int j = 0; j<s1.length();j++)
+	{
+		for(int i = j+1; i<=s1.length(); i++){
+		System.out.println(s1.substring(j,i));
+	}
+}
+}
+public static void palindrome(String s2) 
+{
+	int left = 0;
+	int right = s2.length() -1;
+	while(left<= right)
+	{
+		if(s2.charAt(left)!=s2.charAt(right))
+		{
+			System.out.println("not a palindrome");
+			return;
+		}
+		
+	}
+	System.out.println("palindrome");
+}
+}

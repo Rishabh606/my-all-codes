@@ -1,0 +1,638 @@
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class contest3 {
+	public static Scanner scn = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// aggresive_cows();
+		// modularExp();
+		// murthalParatha();
+		// painter();
+		// ublb();
+		// Read_pages();
+		// findit();
+		/*
+		 * int t = scn.nextInt(); for (int i = 0; i < t; i++) { pairofroses();
+		 * System.out.println(); }
+		 */
+		//Tprime();
+		// Tprimealt();
+	//	rahulhelp();
+//		helprahul();
+		int t = scn.nextInt(); for (int i = 0; i < t; i++) maxsubarraysum();//kthroot();//noofdiv();//sumoddeven(); //evenodd();
+	}
+
+	public static int[] takeinput(int n) {
+		int[] rv = null;
+		// long n = scn.nextInt();
+		rv = new int[n];
+		for (int i = 0; i < n; i++) {
+			rv[i] = scn.nextInt();
+		}
+		return rv;
+	}
+
+	public static long[] takeLinput(int n) {
+		long[] rv = new long[n];
+		for (int i = 0; i < n; i++) {
+			rv[i] = scn.nextLong();
+		}
+		return rv;
+	}
+
+	public static void aggresive_cows() {
+		int n = scn.nextInt();
+		int c = scn.nextInt();
+		int[] arr = takeinput(n);
+		Arrays.sort(arr);
+		int si = arr[0];
+		int ei = arr[arr.length - 1];
+		int li = arr[0];
+		int hi = arr[arr.length - 1];
+		while (si <= ei && (li < hi)) {
+			int cows = c - 1;
+			int mid = (si + ei) / 2;
+			int temp = arr[0];
+			int flag = 1; // neutral_key
+			for (int i = 1; i < n; i++) {
+				if (cows <= 0) {
+					flag = 2; // move right
+					li = mid;
+					break;
+				}
+				if ((arr[i] - mid >= temp)) {
+					temp = arr[i];
+					cows--;
+				}
+				if (i == n - 1 && cows != 0) {
+					flag = 0; // move left
+					hi = mid;
+				}
+			}
+			if (flag == 0) {
+				if (ei == mid) {
+					break;
+				}
+				ei = mid;
+			} else if (flag == 2) {
+
+				si = mid + 1;
+			}
+		}
+		System.out.println(li);
+	}
+
+	public static void modularExp() {
+		BigInteger a = scn.nextBigInteger();
+		int b = scn.nextInt();
+		BigInteger c = scn.nextBigInteger();
+		BigInteger d = (a.pow(b)).mod(c);
+		System.out.println(d);
+	}
+
+	public static void murthalParatha() {
+		int p0 = scn.nextInt();
+		int n = scn.nextInt();
+		int[] arr = takeinput(n);
+		Arrays.sort(arr);
+		// int hi = (arr[0] * (p0) * (p0 + 1)) / 2;
+		int li = arr[0];
+		int si = arr[0];
+		int ei = (arr[0] * (p0) * (p0 + 1)) / 2;
+		while (si <= ei) {
+			int mid = (si + ei) / 2;
+			int sum = 0;
+			for (int i = 0; i < arr.length; i++) {
+				int x = (int) Math.floor((-1 + Math.sqrt(1 + (double) (8 * mid) / (double) arr[i])) / 2.0);
+				sum += x;
+			}
+			/*
+			 * if (sum == p0) { System.out.println(mid); return; } else
+			 */ if (sum < p0) {
+				// li = si;
+				// hi = ei;
+				si = mid + 1;
+			} else {
+				// hi = ei;
+				li = mid;
+				ei = mid - 1;
+			}
+		}
+		// System.out.println((li+hi)/2);
+		// System.out.println((si+ei)/2);
+		System.out.println(li);
+	}
+
+	public static void painter() {
+		long K = scn.nextInt();
+		int N = scn.nextInt();
+		long[] arr = new long[N];
+		long ei = 0;
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+			ei += arr[i];
+		}
+		if (K >= N) {
+			System.out.println(arr[N - 1]);
+			return;
+		}
+		long ans = arr[arr.length - 1];
+		long si = arr[arr.length - 1];
+		if (K == 1) {
+			System.out.println(ei);
+			return;
+		}
+		while (si < ei) {
+			long flag = 0;
+			long mid = (si + ei) / 2;
+			int count = 0;
+			for (long i = 0; i < K; i++) {
+				long sum = 0;
+				if (count > arr.length - 1) {
+					flag = 1;
+					break;
+				}
+				long m = 0;
+				while (sum <= mid) {
+					/*
+					 * if(m==0 && i==0){ sum+=arr[count]; }else if(m!=0 &&
+					 * i!=0){ sum+=arr[count]; }else if(m!=0 && i==0){
+					 * sum+=arr[count]; }else
+					 */
+					if (m == 0 && i != 0) {
+
+					} else {
+						sum += arr[count];
+					}
+					if (sum <= mid) {
+						count++;
+					} else {
+						count--;
+						// break;
+					}
+					m++;
+					if (count > arr.length - 1) {
+						flag = 1;
+						break;
+					}
+				}
+
+			}
+			if (flag == 1) {
+				// decrease time
+				ans = mid;
+				ei = mid - 1;
+			} else if (flag == 0) {
+				// increase time
+				si = mid + 1;
+			}
+
+		}
+		System.out.println(ans);
+	}
+
+	public static void ublb() {
+		HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+		int n = scn.nextInt();
+		// int[] arr = new int[n];
+		for (int i = 0; i < n; i++) {
+			int x = scn.nextInt();
+			if (map.containsKey(x)) {
+				map.get(x).set(1, i);
+			} else {
+				ArrayList<Integer> pos = new ArrayList<Integer>();
+				pos.add(i);
+				pos.add(i);
+				map.put(x, pos);
+			}
+		}
+		int t = scn.nextInt();
+		int[] q = takeinput(t);
+		for (int i = 0; i < t; i++) {
+			if (map.containsKey(q[i])) {
+				System.out.println(map.get(q[i]).get(0) + " " + map.get(q[i]).get(1));
+			} else {
+				System.out.println(-1 + " " + -1);
+			}
+		}
+	}
+
+	public static long modInverse(long a) {
+		a = a % 1000000007;
+		long m = 0;
+		for (long x = 1; x < 1000000007; x++) {
+			if ((a * x) % 1000000007 == 1) {
+				m = x;
+				break;
+			}
+		}
+		return m;
+	}
+
+	public static void Read_pages() {
+		int n = scn.nextInt();
+		int m = scn.nextInt();
+		long li = 0;
+		int[] arr = takeinput(n);
+		if (n <= m) {
+			System.out.println(arr[arr.length - 1]);
+			return;
+		}
+		long si = arr[arr.length - 1];
+		long ei = 0;
+		for (int i = 0; i < arr.length; i++) {
+			ei += arr[i];
+		}
+		while (si <= ei) {
+			long middle = (si + ei) / 2;
+			int count = 1;
+			// arr is books, count is people
+			long sum = 0;
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i] > middle) {
+					count = m + 1;
+					break;
+				}
+				sum += arr[i];
+				if (sum > middle) {
+					sum = 0;
+					i--;
+					count++;
+				}
+				if (count > m) {
+					break;
+				}
+			}
+			if (count > m) {
+				si = middle + 1;
+			} else if (count <= m) {
+				li = middle;
+				ei = middle - 1;
+			}
+		}
+		System.out.println(li);
+	}
+
+	public static void findit() {
+		int n = scn.nextInt();
+		int[] arr = takeinput(n);
+		Arrays.sort(arr);
+
+		int[] fctr = new int[100000];
+		fctr[1] = arr.length;
+		for (int i : arr) {
+			if (i != 1) {
+				fctr[i]++;
+			}
+			for (int j = 2; j <= (int) Math.sqrt(i); j++) {
+				if (i % j == 0) {
+					fctr[j]++;
+					if (i != j * j) {
+						fctr[i / j]++;
+					}
+				}
+			}
+		}
+		int q = scn.nextInt();
+		for (int i = 0; i < q; i++) {
+			int qry = scn.nextInt();
+			System.out.println(fctr[qry]);
+		}
+	}
+
+	public static void Tprime() {
+		int n = scn.nextInt();
+		long[] arr = takeLinput(n);
+		for (long i : arr) {
+			int flag = 0;
+			long sum = 2;
+			for (long j = 2; j <= Math.floor(Math.sqrt(i)); j++) {
+				if (i % j == 0) {
+					sum++;
+					if (i != j * j) {
+						sum++;
+						flag = 1;
+						System.out.println("NO");
+						break;
+					}
+					/*
+					 * if(sum==3){ flag =1; } if(sum>3){ flag =0; break; }
+					 */
+				}
+			}
+			if (flag == 1) {
+				continue;
+			}
+			if (sum > 3) {
+				System.out.println("YES");
+			} else {
+				System.out.println("NO");
+			}
+			/*
+			 * String rv = (flag==0)?"NO":"YES"; System.out.println(rv);
+			 */
+		}
+	}
+
+	public static void Tprimealt() {
+		int n = scn.nextInt();
+		long[] arr = takeLinput(n);
+		for (long i : arr) {
+			if (i == 4) {
+				System.out.println("YES");
+				continue;
+			}
+			if (i % 2 == 0 && i != 4) {
+				System.out.println("NO");
+				continue;
+			}
+			if (Math.floor(Math.sqrt(i)) != Math.ceil(Math.sqrt(i))) {
+				System.out.println("NO");
+				continue;
+			}
+			for (int j = 3; j <= (long) Math.sqrt(Math.sqrt(i)); j += 2) {
+				if (i % j == 0) {
+					System.out.println("NO");
+					continue;
+				}
+			}
+			System.out.println("YES");
+		}
+	}
+
+	public static void pairofroses() {
+		int n = scn.nextInt();
+		int[] arr = takeinput(n);
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int i : arr) {
+			if (map.containsKey(i)) {
+				map.put(i, 2);
+			} else {
+				map.put(i, 1);
+			}
+		}
+		int key = scn.nextInt();
+		int num1 = 0;
+		int num2 = 0;
+		int diff = Integer.MAX_VALUE;
+		for (int i = 0; i < arr.length; i++) {
+			if (map.containsKey(key - arr[i])) {
+				if ((key - arr[i]) == arr[i]) {
+					if (map.get(arr[i]) == 2) {
+						if (diff > Math.abs((key - 2 * arr[i]))) {
+							diff = Math.abs((key - 2 * arr[i]));
+							num1 = arr[i];
+							num2 = key - arr[i];
+						}
+					}
+				} else {
+					if (diff > Math.abs((key - 2 * arr[i]))) {
+						diff = Math.abs((key - 2 * arr[i]));
+						num1 = arr[i];
+						num2 = key - arr[i];
+					}
+				}
+
+			}
+		}
+		System.out.println("Deepak should buy roses whose prices are " + Math.min(num1, num2) + " and "
+				+ Math.max(num1, num2) + ".");
+	}
+
+	public static void rahulhelp() {
+		int n = scn.nextInt();
+		// long [] arr= new long[n];
+		long[] arr2 = null;
+		ArrayList<Long> br = new ArrayList<>();
+		// arr[0] = scn.nextLong();
+		br.add(scn.nextLong());
+		int flag = 0;
+		if (n > 1) {
+			// arr[1]= scn.nextLong();
+			br.add(scn.nextLong());
+			// flag = ((arr[1]-arr[0])>0)?1:2;
+		//	br.add(scn.nextLong());
+			flag = ((br.get(1) - br.get(0)) > 0) ? 1 : 2;
+		}
+		// Arrays.binarySearch(br.toArray(), key)
+		for (int i = 2; i < n && flag > 0; i++) {
+			long x = scn.nextLong();
+			if (flag == 1) {
+				if (x - br.get(i - 1) > 0) {
+					br.add(x);
+				} else {
+					arr2 = new long[n - i];
+					arr2[0]= x;
+					for (int j = 1; j < arr2.length; i++, j++) {
+						arr2[j] = scn.nextLong();
+					}
+					break;
+				}
+			} else {
+				if (flag == 2) {
+					if (x - br.get(i - 1) < 0) {
+						br.add(x);
+					} else {
+						arr2 = new long[n - i];
+						arr2[0]=x;
+						for (int j = 0; j < arr2.length; i++, j++) {
+							arr2[j] = scn.nextLong();
+						}
+						break;
+					}
+				}
+			}
+		}
+		long key = scn.nextLong();
+		int pos1 = Arrays.binarySearch(arr2, key);
+		int pos2 = Arrays.binarySearch(br.toArray(), key);
+		if(pos1>pos2){
+			System.out.println(arr2.length-1+pos1);
+		}else{
+			System.out.println(pos2);
+		}
+	}
+	public static void helprahul(){
+		int n = scn.nextInt();
+		long [] arr = new long[n];
+		long min =Long.MAX_VALUE;
+		int pos = -1;
+		for(int i = 0;i<n;i++){
+			arr[i] = scn.nextLong();
+			if(min>arr[i]){
+				min = arr[i];
+				pos = i;
+			}
+		}
+		long key = scn.nextLong();
+		int si = 0;
+		int ei = arr.length;
+		boolean found = false;
+		while(si<=ei){
+			int middle = (si+ei)/2;
+			int value= (middle+pos)%arr.length;
+			if(arr[value]==key){
+				System.out.println(value);
+				found = true;
+				break;
+			}else if(arr[value]>key){
+				ei = middle -1;
+			}else{
+				si = middle+1;
+			}
+		}
+		if(!found){
+			System.out.println(-1);
+		}
+	}
+	/*public static void evenodd(){
+		int n = scn.nextInt();
+		int flag = 0;
+		long sumo = 1;
+		long sume = 0;
+		if(n%2!=0){
+			flag = 1;
+			sumo+=n;
+		}else{
+			sume+=n;
+		}
+		if(flag==1){
+			for(int i = 3;i<=Math.sqrt(n);i+=2){
+				if(n%i==0){
+					sumo+=i;
+					if(i*i!=n){
+						sumo+=(n/i);
+					}
+				}
+			}
+		}else{
+			for(int i = 2;i<Math.sqrt(n);i++){
+				if(n%i==0){
+					if(i%2!=0){
+						sumo+=i;
+						if(i*i!=n){
+							sume+=(n/i);
+						}
+					}else{
+						sume+=i;
+						if(i*i!=n){
+							if(((n/i)&1)==0){
+								sume+=(n/i);
+							}else{
+								sumo+=(n/i);
+							}
+						}
+					}
+				}
+			}
+		}
+		System.out.println(sume-sumo);
+	}*/
+	public static void sumoddeven(){
+		int n = scn.nextInt();
+		int flag = 0;
+		long sumo = 0;
+		long sume = 0;
+		for (long j = 1; j <= Math.floor(Math.sqrt(n)); j++) {
+			if (n % j == 0) {
+				if(j%2==0)sume+=j;
+				else sumo+=j;
+				if (n != j * j) {
+					if((n/j)%2==0)sume+=(n/j);
+					else sumo+=(n/j);
+				}
+			}
+		}
+		System.out.println(sume-sumo);
+	}
+	public static void noofdiv(){
+		int n = scn.nextInt();
+		int[] arr = takeinput(n);
+		Arrays.sort(arr);
+
+		long[] fctr = new long[arr[n-1]+5];
+		fctr[1] = arr.length;
+		for (int i : arr) {
+			if (i != 1) {
+				fctr[i]++;
+			}
+			for (int j = 2; j <= (int) Math.sqrt(i); j++) {
+				if (i % j == 0) {
+					fctr[j]++;
+					if (i != j * j) {
+						fctr[i / j]++;
+					}
+				}
+			}
+		}
+		/*int q = scn.nextInt();
+		for (int i = 0; i < q; i++) {
+			int qry = scn.nextInt();
+			System.out.println(fctr[qry]);
+		}*/
+		long sum = 0;
+		long p = 1000000007;
+		for(long i:fctr){
+			sum+=(i%p);
+			sum=sum%p;
+		}
+		System.out.println(sum);
+	}
+	public static void kthroot(){
+		long n = scn.nextLong();
+		int k = scn.nextInt();
+		long si = 1;
+		long ei = n;
+		long ans = ei;
+		while(si<=ei){
+			long mid = (si+ei)/2;
+			long val = (long)Math.pow(mid, k);
+			if(val>n){
+				ei = mid-1;
+			}else if(val<n){
+				si = mid+1;
+				ans = mid;
+			}else{
+				ans =mid;
+				break;
+			}
+		}
+		System.out.println(ans);
+	}
+	//static long dvqmax;
+	public static void maxsubarraysum(){
+		int n = scn.nextInt();
+		int[] arr= takeinput(n);
+	//	dvqmax= arr[0];
+		long[][] strg = new long[arr.length+1][arr.length+1];
+		long max = dvq(arr,0,0,strg);
+		System.out.println(max);
+	}
+
+	private static long dvq(int[] arr, int si, int ei,long[][]strg) {
+		// TODO Auto-generated method stub
+		if(si<0||ei>arr.length-1||ei<si){
+			return 0;
+		}
+		if(strg[si][ei]!=0){
+			return strg[si][ei];
+		}
+		/*if(si==ei){
+			return arr[si];
+		}*/
+		long m1 =dvq(arr, si, ei+1,strg);
+		long m2 = dvq(arr, si+1, ei,strg);
+		long sum = 0;
+		for(int i=si;i<=ei;i++){
+			sum+=arr[i];
+		}
+		long mx = Math.max(Math.max(m1, m2), sum);
+		strg[si][ei] = mx;
+		return mx;
+	}
+}

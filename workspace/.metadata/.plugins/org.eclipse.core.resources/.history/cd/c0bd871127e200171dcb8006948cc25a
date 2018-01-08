@@ -1,0 +1,135 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.TreeSet;
+
+public class contest2_2 {
+
+	public static Scanner scn = new Scanner(System.in);
+	
+	public static boolean flag_SE = false; 
+	public static void main(String[] args) {
+		/*int n = scn.nextInt();
+		for(int i = 0 ; i<n; i++){
+			String str = scn.next();
+			TreeSet<String>sb = new TreeSet<>();
+			subset(str,"",sb);
+			for(String j:sb){
+				System.out.println(j);
+			}
+		}*/
+		ans_simpleE_B();
+		/*String s1 = scn.next();
+		String s2 = scn.next();
+		if(s1.equals(s2)){
+			System.out.println("true");
+		}else{
+			System.out.println("False");
+		}*/
+	}
+	
+	public static void subset(String str, String res,TreeSet<String>sb){ 
+		if(str.length() == 0){
+			sb.add(res);
+			return;
+		}
+		char ch = str.charAt(str.length()-1);
+		String ros = str.substring(0,str.length()-1);
+		subset(ros, res,sb);
+		subset(ros, ch+res,sb);
+		return;
+	}
+	public static void ans_simpleE(){
+		long n = scn.nextLong();
+		long l = scn.nextLong();
+		long r = scn.nextLong();
+		ArrayList<Long>br = new ArrayList<>();
+		br.add(n);
+		main_simpleE(br, 0,l,r);
+	}
+
+	private static void main_simpleE(ArrayList<Long> br, int idx, long l, long r) {
+		long num = br.get(idx);
+		if(idx<br.size()){
+			br.set(idx,num/2);
+			br.add(idx+1, num%2);
+			br.add(idx+2, num/2);
+		}
+		for(int i=0;i<br.size();i++){
+			if(br.get(i)==0|| br.get(i)==1)continue;
+			main_simpleE(br, i, l, r);
+			if(flag_SE)return;
+		}
+		if(!flag_SE){
+			long count = 0;
+			for(long i = l-1;i<r;i++){
+				if((br.get((int) i))==1){
+					count++;
+				}
+			}
+			System.out.println(count);
+			flag_SE = true;
+		}
+		return;
+	}
+	public static void ans_simpleE_B(){
+		long n = scn.nextLong();
+		long l = scn.nextLong();
+		long r = scn.nextLong();
+		if(n<=1){
+		System.out.println(n);
+		return;
+		}
+		long[] arr = new long[2];
+		arr[0] = n/2;
+		arr[1] = n%2;
+		ArrayList<Long> sol = main_simpleE_B(arr, 0,l,r);
+		long count = 0;
+		for(long i = l-1;i<r;i++){
+			if(i==1){
+				count++;
+			}
+		}
+		System.out.println(count);
+	}
+
+	private static ArrayList<Long> main_simpleE_B(long[] br, int idx, long l, long r) {
+		ArrayList<Long> left= new ArrayList<>();
+		ArrayList<Long> right= new ArrayList<>();
+		ArrayList<Long> sol = new ArrayList<>();
+		if(br[0]>1){
+			long[] arr = new long[2];
+			arr[0] = br[0]/2;
+			arr[1] = br[0]%2;
+			left = main_simpleE_B(br, idx, l, r);
+		}
+		if(br[1]>1){
+			long[] arr = new long[2];
+			arr[0] = br[1]/2;
+			arr[1] = br[1]%2;
+			right = main_simpleE_B(br, idx, l, r);
+		}
+		if(left.size()>0){
+			for(long i : left){
+			sol.add(i);
+			}
+		}else{
+			sol.add(br[0]);
+		}
+		if(right.size()>0){
+			for(long i : right){
+				sol.add(i);
+			}
+		}else{
+			sol.add(br[1]);
+		}
+		if(left.size()>0){
+			for(long i = left.size()-1;i>=0;i--){
+				sol.add(left.get((int) i));
+			}
+		}else{
+			sol.add(br[0]);
+		}
+		return sol;
+	}
+}
+ 

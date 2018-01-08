@@ -1,0 +1,29 @@
+package Lecture12.story2;
+
+public class StudentClient {
+
+	public static void main(String[] args) throws Exception {
+		// only array created, no student created yet.
+		Student[] students = new Student[1000];
+		
+		for(int i = 0; i < students.length; i++){
+			students[i] = new Student(i + "th");
+			System.out.println(Student.GeNumOfStudents());
+		}
+			
+//		students[250].rollNo = 10; No fear here.
+		System.out.println(students[250].rollNo);
+		
+		
+		System.out.println(students[250].getName());
+//		students[250].setName(""); safe here because of exception.
+		
+		students[250].ANonStaticFunction();
+		students[250].AStaticFunction();
+		Student.AStaticFunction();
+		
+		students[250].setUniformColor("Blue");
+		System.out.println(students[350].getUniformColor());
+	}
+
+}

@@ -1,0 +1,27 @@
+package practise2;
+
+import java.util.Scanner;
+
+public class practise_15 {
+	public static Scanner scn = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int t = scn.nextInt();
+		int [] pts_in_row = new int [t];
+		int [] pts_in_cols = new int [t];
+		for(int i = 0; i<t;i++){
+			pts_in_row[i] = scn.nextInt();
+			pts_in_cols[i] = scn.nextInt();
+			
+		}
+		for(int i = 0; i<t;i++){
+			squarecounter(pts_in_row[i],pts_in_cols[i]);
+			
+		}
+	}
+
+	public static void squarecounter(int row, int col) {
+
+	}
+}

@@ -1,0 +1,43 @@
+package practise2;
+
+import java.util.Scanner;
+
+public class practise_15 {
+	  public static void main(String[] args) {
+	        Scanner in = new Scanner(System.in);
+	        int n = in.nextInt();
+	        int x0 = in.nextInt();
+	         int y0 = in.nextInt();
+	        int flag= -1;
+	        for(int a0 = 1; a0 < n; a0++){
+	            int x = in.nextInt();
+	            int y = in.nextInt();
+	            if(a0==1){
+	                if(x == x0){
+	                    flag = 0; 
+	                }
+	                else if(y == y0){
+	                    flag = 1;
+	                }
+	                else{
+	                    flag = -1;
+	                    System.out.println("NO");
+	                    return;
+	                }
+	            }
+	            if(flag==1){
+	                if(x!=x0){
+	                    System.out.println("NO");
+	                    return;
+	                }
+	            }
+	            else {
+	                if(y!=y0){
+	                    System.out.println("NO");
+	                    return;
+	                }
+	            }
+	        }
+	         System.out.println("YES");
+	    }
+}

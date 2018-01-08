@@ -1,0 +1,144 @@
+import java.util.ArrayList;
+
+public class HashMap<K, V> {
+	public static void main(String[] args) throws Exception {
+	    System.out.println("JUST see the code.");
+	   HashMap<String, Integer> hm = new HashMap<String, Integer>(10);
+	   hm.put("car", 7);
+	   hm.put("bike", 9);
+	  System.out.println(hm.containskey("car"));
+	  System.out.println(hm.keyset());
+	  System.out.println(hm.remove("bike"));
+		}
+	
+	private class HTNode {
+		K key;
+		V value;
+
+		HTNode(K key, V value) {
+			this.key = key;
+			this.value = value;
+		}
+		
+		public String toString() {
+			return "{"+this.key + "- " + this.value +"}";
+		}
+	}
+
+	private linklist_T<HTNode>[] bucketArray;// N
+	private int size;// n
+
+	public HashMap(int cap) {
+		this.bucketArray = (linklist_T<HTNode>[]) new linklist_T[cap];
+		for (int i = 0; i < bucketArray.length; i++) {
+			this.bucketArray[i] = new linklist_T<>();
+		}
+		this.size = 0;
+	}
+
+	public void put(K key, V value) throws Exception {
+		int keycode = hashfunction(key);
+		int temp = findInBucket(bucketArray[keycode], key);
+		if (temp == -1) {
+			HTNode ht = new HTNode(key, value);
+			bucketArray[keycode].addFirst(ht);
+			this.size++;
+		} else {
+			HTNode ht = bucketArray[keycode].getAt(temp);
+			ht.value = value;
+		}
+		double lambda = (this.size * 1.0) / bucketArray.length;
+		if (lambda >= 1.5) {
+			rehashing();
+		}
+	}
+
+	public boolean isEmpty() {
+		return this.size == 0;
+	}
+
+	public int size() {
+		return this.size;
+	}
+
+	public boolean containskey(K key) throws Exception {
+		int keycode = hashfunction(key);
+		int temp = findInBucket(bucketArray[keycode], key);
+		if (temp == -1) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	public V remove(K key) throws Exception {
+		int keycode = hashfunction(key);
+		int temp = findInBucket(bucketArray[keycode], key);
+		if (temp == -1) {
+			return null;
+		} else {
+			HTNode nd = bucketArray[keycode].removeNodeAt(temp);
+			this.size--;
+			return nd.value;
+		}
+	}
+
+	public V getAt(K key) throws Exception {
+		int keycode = hashfunction(key);
+		int temp = findInBucket(bucketArray[keycode], key);
+		if (temp == -1) {
+			return null;
+		} else {
+			HTNode nd = bucketArray[keycode].getAt(temp);
+			return nd.value;
+		}
+	}
+
+	public ArrayList<K> keyset() throws Exception {
+		ArrayList<K> br = new ArrayList<>();
+		for (int i = 0; i < bucketArray.length; i++) {
+			for (int j = 0; j < bucketArray[i].listsize(); j++) {
+				br.add(bucketArray[i].getAt(j).key);
+			}
+		}
+		return br;
+	}
+
+	public void display() throws Exception {
+		for (int i = 0; i < bucketArray.length; i++) {
+			bucketArray[i].display();
+		}
+	}
+
+	private int hashfunction(K key) {
+		int k = key.hashCode();
+		k = Math.abs(k) % bucketArray.length;
+		return k;
+	}
+
+	private void rehashing() throws Exception {
+		linklist_T<HTNode>[] ob = this.bucketArray;
+		this.bucketArray = (linklist_T<HTNode>[]) new linklist_T[2 * ob.length];
+		for (int i = 0; i < bucketArray.length; i++) {
+			this.bucketArray[i] = new linklist_T<>();
+		}
+		this.size = 0;
+		for (int i = 0; i < ob.length; i++) {
+			for (int j = 0; j < ob[i].listsize(); j++) {
+				HTNode temp = ob[i].getAt(j);
+				put(temp.key, temp.value);
+			}
+		}
+	}
+
+	private int findInBucket(linklist_T<HTNode> bucket, K key) throws Exception {
+		for (int i = 0; i < bucket.listsize(); i++) {
+			HTNode temp = bucket.getAt(i);
+			if (temp.key.equals(key)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+}

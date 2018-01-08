@@ -1,0 +1,40 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.TreeSet;
+
+public class contest2_2 {
+
+	public static Scanner scn = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		int n = scn.nextInt();
+		for(int i = 0 ; i<n; i++){
+			String str = scn.next();
+			TreeSet<String>sb = new TreeSet<>();
+			subset(str,"",sb);
+			for(String j:sb){
+				System.out.println(j);
+			}
+		}
+	}
+	
+	public static void subset(String str, String res,TreeSet<String>sb){ 
+		if(str.length() == 0){
+			sb.add(res);
+			return;
+		}
+		char ch = str.charAt(str.length()-1);
+		String ros = str.substring(0,str.length()-1);
+		subset(ros, res,sb);
+		subset(ros, ch+res,sb);
+		return;
+	}
+	public static void ans_simpleE(){
+		long n = scn.nextLong();
+		long l = scn.nextLong();
+		long r = scn.nextLong();
+		ArrayList <Integer> sol = new ArrayList<Integer>();
+		int[] arr = main_simpleE()
+	}
+}
+ 

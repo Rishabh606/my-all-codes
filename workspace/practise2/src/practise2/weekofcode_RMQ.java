@@ -1,0 +1,89 @@
+package practise2;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class weekofcode_RMQ {
+
+	public static Scanner scn = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// ArrayList<ArrayList<Integer>> group = new
+		// ArrayList<ArrayList<Integer>>(40000);
+		ArrayList<Integer> group[] = new ArrayList[40000]; // Put the length of
+															// the array you
+															// need
+
+		int n = scn.nextInt();
+		int q = scn.nextInt();
+		int[] a = new int[n];
+		int max = Integer.MIN_VALUE;
+		for (int a_i = 0; a_i < n; a_i++) {
+			a[a_i] = scn.nextInt();
+			if (group[a[a_i]] == null) {
+				group[a[a_i]] = new ArrayList<>();
+			}
+			max = Math.max(max, a[a_i]);
+			group[a[a_i]].add(a_i);
+		}
+		for (int a0 = 0; a0 < q; a0++) {
+			int left = scn.nextInt();
+			int right = scn.nextInt();
+			int x = scn.nextInt();
+			int y = scn.nextInt();
+			// your code goes here
+			RMQ(left, right, x, y, a, group, max);
+		}
+	}
+
+	public static int binarysearch(ArrayList<Integer> arr, int key) {
+		if(arr==null){
+			return -1;
+		}
+		if(arr.size()==1){
+		}
+		int retval = -1, left = 0, right = arr.size() - 1;
+		int middle = 0;
+		while (left <= right) {
+			middle = (left + right) / 2;
+			if (key > arr.get(middle - 1) && key < arr.get(middle)) {
+				retval = middle - 1;
+				break;
+			}
+			if (key > arr.get(middle) && key < arr.get(middle + 1)) {
+				retval = middle;
+				break;
+			}
+
+			if (key == arr.get(middle)) {
+				retval = middle;
+				break;
+			} else if (arr.get(middle) > key) {
+				right = middle - 1;
+			} else {
+				left = middle + 1;
+			}
+
+		}
+
+		return retval;
+	}
+
+	public static void RMQ(int left, int right, int x, int y, int[] a, ArrayList<Integer> group[], int max) {
+		int count = 0;
+		for (int i = 0; x * i + y <= max; i++) {
+			int small = binarysearch(group[x * i + y], left);
+			int big = binarysearch(group[x * i + y], right);
+			if(small!=-1){
+			if (group[x * i + y].get(small) < small) {
+				small++;
+			}
+			for (small = small; small < big; small++) {
+				count++;
+			}
+			}
+		}
+		System.out.println(count);
+	}
+}

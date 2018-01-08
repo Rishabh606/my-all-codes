@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class contest1_cont {
+
+	public static Scanner scn = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		factsumer();
+	}
+	public static void factsumer(){
+		int n = scn.nextInt();
+		long sum = 0;
+		for(int i = 0; i<n; i++){
+			sum+=fact(scn.nextInt());	
+		}
+		System.out.println(sum%107);
+	}
+	public static long fact(int n){
+		if (n==0|| n==1){
+			return 1;
+		}
+		return fact(n-1)*(n);
+	}
+}

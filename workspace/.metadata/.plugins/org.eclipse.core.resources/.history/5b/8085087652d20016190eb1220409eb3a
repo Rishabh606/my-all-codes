@@ -1,0 +1,25 @@
+package practise2;
+
+import java.util.Scanner;
+
+public class practise_1 {
+	public static Scanner scn = new Scanner(System.in);
+	public static void main(String[] args) {
+	int a =	snakeladder(15,3)	;
+	}
+public static int snakeladder(int end, int curr){
+	if(curr==end){
+		System.out.println("END");
+		return curr;
+	}
+	if(curr>end){
+		return 0 ;
+	}
+	for(int dice = 1; dice<=6;dice++){
+	int	path = snakeladder(end,curr+dice);
+		if(path!=0){
+			System.out.print(curr+"-->");
+		}
+	}
+}
+}
